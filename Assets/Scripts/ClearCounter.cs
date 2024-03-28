@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class ClearCounter : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public void Interact() {
+        Debug.Log("Player Interacted with ClearCounter");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -26,13 +26,13 @@ public class Player : MonoBehaviour
         float interactDistance = 2f;
         RaycastHit raycastHit;
         if (Physics.Raycast(transform.position, lastInteractDir, out raycastHit , interactDistance)) {
-            Debug.Log(raycastHit.transform);
+            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter)){
+                // Has ClearCounter
+                clearCounter.Interact();
+            }
         } else {
             Debug.Log("-");
         }
-
-
-        
     }
 
     public bool IsWalking() {
