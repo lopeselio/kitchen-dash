@@ -84,6 +84,6 @@ public class Player : MonoBehaviour
 
 
 
-        Debug.Log(Time.deltaTime);
+        // Debug.Log(Time.deltaTime);
     }
 }
