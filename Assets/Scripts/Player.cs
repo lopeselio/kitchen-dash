@@ -5,6 +5,31 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
+    //public static Player instance;
+    //public static Player Instance 
+    //{
+    //    get
+    //    {
+    //        return Instance;
+    //    }
+    //    set
+    //    {
+    //        Instance = value;
+    //    }
+    //}
+
+    //public static Player instanceField;
+
+    //public static Player GetInstanceField()
+    //{
+    //    return instanceField;
+    //}
+
+    //public static void SetInstanceField(Player instanceField)
+    //{
+    //    Player.instanceField = instanceField;
+    //}
 
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs {
@@ -17,8 +42,16 @@ public class Player : MonoBehaviour
     private bool isWalking;
     private Vector3 lastInteractDir;
     private ClearCounter selectedCounter;
-    
-    
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("There is more than one Player Instance");
+        }
+        Instance = this;
+    }
+
     private void Start() {
         gameInput.OnInteractAction += GameInput_OnInteraction;
     }
@@ -114,7 +147,7 @@ public class Player : MonoBehaviour
         this.selectedCounter = selectedCounter;
 
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs {
-            selectedCounter = selectedCounter;
+            selectedCounter = selectedCounter
         });
     }
 }
