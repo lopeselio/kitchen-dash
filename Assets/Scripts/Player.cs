@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IKitchenObjectParent
 {
     public static Player Instance { get; private set; }
     //public static Player instance;
@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     //    Player.instanceField = instanceField;
     //}
 
+
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs {
         public ClearCounter selectedCounter;
@@ -38,10 +39,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
+    [SerializeField] private Transform kitchenObjectHoldPoint;
+
 
     private bool isWalking;
     private Vector3 lastInteractDir;
     private ClearCounter selectedCounter;
+    private KitchenObject kitchenObject;
 
     private void Awake()
     {
@@ -58,7 +62,7 @@ public class Player : MonoBehaviour
 
     private void GameInput_OnInteraction(object sender, System.EventArgs e){
         if (selectedCounter != null) {
-            selectedCounter.Interact();
+            selectedCounter.Interact(this);
         }
     }
 
@@ -150,4 +154,55 @@ public class Player : MonoBehaviour
             selectedCounter = selectedCounter
         });
     }
+
+    //public Transform GetKitchenObjectFollowTransform()
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public void SetKitchenObject(KitchenObject kitchenObject)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public KitchenObject GetKitchenObject()
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public void ClearKitchenObject()
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //public bool HasKitchenObject()
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    public Transform GetKitchenObjectFollowTransform()
+    {
+        return kitchenObjectHoldPoint;
+    }
+
+    public void SetKitchenObject(KitchenObject kitchenObject)
+    {
+        this.kitchenObject = kitchenObject;
+    }
+
+    public KitchenObject GetKitchenObject()
+    {
+        return kitchenObject;
+    }
+
+    public void ClearKitchenObject()
+    {
+        kitchenObject = null;
+    }
+
+    public bool HasKitchenObject()
+    {
+        return kitchenObject != null;
+    }
+
 }
